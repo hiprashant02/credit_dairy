@@ -1,9 +1,9 @@
 
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize(
-   'credithow', 
-   'prash', 
-   'bc33445566@BBC', {
+   'credit_dairy', 
+   'root', 
+   '', {
       dialect: 'mysql',
       host: 'localhost'
    }
