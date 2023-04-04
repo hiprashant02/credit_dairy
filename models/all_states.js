@@ -10,8 +10,18 @@ const State = sequelize.define('states', {
     state: {
         type: Sequelize.STRING(30),
         allowNull: false,
-        index:true
+        index: true
     }
-})
+},
+    {
+        timestamps: false,
+
+        // If don't want createdAt
+        createdAt: false,
+
+        // If don't want updatedAt
+        updatedAt: false,
+
+    })
 
 module.exports = State

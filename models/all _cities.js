@@ -11,12 +11,21 @@ const City = sequelize.define('cities', {
     city: {
         type: Sequelize.STRING(30),
         allowNull: false,
-        index:true
+        index: true
     },
-    stateId:{
+    stateId: {
         type: Sequelize.SMALLINT,
         allowNull: false,
     },
+}, {
+    timestamps: false,
+
+    // If don't want createdAt
+    createdAt: false,
+
+    // If don't want updatedAt
+    updatedAt: false,
+
 })
 
 City.belongsTo(State, { foreignKey: 'stateId' });
