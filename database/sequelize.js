@@ -5,7 +5,8 @@ const sequelize = new Sequelize(
    'root',
    '', {
    dialect: 'mysql',
-   host: 'localhost'
+   host: 'localhost',
+   port: 3306,
 }
 );
 sequelize.authenticate()
