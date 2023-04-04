@@ -79,4 +79,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status||500).json(err.message);
 });
 
-module.exports = app;
+app.listen(3306, () => {
+  console.log(`Example app listening on port ${port}`)
+})
