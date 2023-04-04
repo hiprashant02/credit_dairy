@@ -14,7 +14,7 @@ sequelize.authenticate()
       console.log('\n\n\nConnection has been established successfully.\n\n\n');
    })
    .catch(err => {
-      throw err;
+      throw err.err;
    });
 
 module.exports = sequelize
