@@ -1,10 +1,11 @@
 
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize('credit_dairy', 'root', '', {
-  host: 'localhost',
-  port: 3306,
-  dialect: 'mysql'
+host: 'localhost',
+port: 3307,
+dialect: 'mysql'
 });
+
 
 sequelize.authenticate()
    .then(() => {
