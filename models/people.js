@@ -12,19 +12,6 @@ const People = sequelize.define('people', {
     },
 
     name: { type: Sequelize.STRING(80), allowNull: false, index:true },
-
-    street_name: {
-        type: Sequelize.STRING(120), allowNull: true
-    },
-    nearest_landmark: {
-        type: Sequelize.STRING(120), allowNull: true
-    },
-    cityId: {
-        type: Sequelize.SMALLINT, allowNull: true
-    },
-    stateId: {
-        type: Sequelize.SMALLINT, allowNull: true
-    },
     userOf: {
         type: Sequelize.INTEGER,
         allowNull: false
@@ -60,7 +47,5 @@ const People = sequelize.define('people', {
 People.belongsTo(User, { foreignKey: 'userOf' });
 People.belongsTo(User, { foreignKey: 'userId' });
 People.belongsTo(User, { foreignKey: 'createdBy' });
-People.belongsTo(City,{foreignKey: "cityId"})
-People.belongsTo(State,{foreignKey: "stateId"})
 
 module.exports = People

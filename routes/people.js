@@ -46,8 +46,7 @@ router.post('/create', async function (req, res, next) {
             if (!req.body.name) throw new Error("Missing Name")
             user = await User.create({ mobile: req.body.phone, name: req.body.name })
         }
-        const address =  req.body.city && req.city.body ? matchAddress(req.body.city,req.body.state):{}
-        const CreatedCustomer = await People.create({ name: req.body.name, street_name: req.body.street_name, nearest_landmark: req.body.nearest_landmark, city: address.city, state: address.state, userOf: req.body.createCustomer ? req.body.userId : user.id, userId: req.body.createCustomer ? user.id : req.body.userId, createdBy: req.body.userId })
+        const CreatedCustomer = await People.create({ name: req.body.name, userOf: req.body.createCustomer ? req.body.userId : user.id, userId: req.body.createCustomer ? user.id : req.body.userId, createdBy: req.body.userId })
         res.status(200).json({ "status": "Success", customers: CreatedCustomer })
         const device1 = clientMap[user.id];
         const device2 = clientMap[req.body.userId];
@@ -100,30 +99,30 @@ router.post('/suppliers', async function (req, res, next) {
     }
 });
 
-router.post('/all', async function (req, res, next) {
-    try {
-        const people = await People.query(`
-         SELECT 
-           CASE
-             WHEN p.userOf = ${req.body.userId} THEN 'Customer'
-             WHEN p.userId = ${req.body.userId} THEN 'Supplier'
-           END AS \`Type\`,
-           CASE
-             WHEN p.createdBy = ${req.body.userId} AND p.name <> '' THEN p.name
-             WHEN p.userOf = ${req.body.userId} THEN customer.name
-             WHEN p.userId = ${req.body.userId} THEN supplier.name
-           END AS \`Name\`
-         FROM people p
-         LEFT JOIN users supplier ON p.userOf = supplier.id 
-         LEFT JOIN users customer ON p.userId = customer.id
-         WHERE p.userOf = ${req.body.userId} OR p.userId = ${req.body.userId}
-         ORDER BY updatedAt DESC`, {
-            type: db.Sequelize.QueryTypes.SELECT
-        })
-        res.status(200).json({ "status": "OK", people: people })
-    } catch (error) {
-        next(createHttpError(500, error.message))
-    }
-});
+// router.post('/all', async function (req, res, next) {
+//     try {
+//         const people = await People.query(`
+//          SELECT 
+//            CASE
+//              WHEN p.userOf = ${req.body.userId} THEN 'Customer'
+//              WHEN p.userId = ${req.body.userId} THEN 'Supplier'
+//            END AS \`Type\`,
+//            CASE
+//              WHEN p.createdBy = ${req.body.userId} AND p.name <> '' THEN p.name
+//              WHEN p.userOf = ${req.body.userId} THEN customer.name
+//              WHEN p.userId = ${req.body.userId} THEN supplier.name
+//            END AS \`Name\`
+//          FROM people p
+//          LEFT JOIN users supplier ON p.userOf = supplier.id 
+//          LEFT JOIN users customer ON p.userId = customer.id
+//          WHERE p.userOf = ${req.body.userId} OR p.userId = ${req.body.userId}
+//          ORDER BY updatedAt DESC`, {
+//             type: db.Sequelize.QueryTypes.SELECT
+//         })
+//         res.status(200).json({ "status": "OK", people: people })
+//     } catch (error) {
+//         next(createHttpError(500, error.message))
+//     }
+// });
 
 module.exports = router;

@@ -9,6 +9,9 @@ var router = express.Router();
 /* GET home page. */
 router.post('/all', async function (req, res, next) {
     try {
+        const pageSize = 30;
+        const currentPage = req.body.currentPage | 1;
+        const offset = (currentPage - 1) * pageSize;
         const peopleId = req.body.peopleId
         if (!peopleId) {
             throw new Error("Missing people id")
@@ -16,7 +19,7 @@ router.post('/all', async function (req, res, next) {
         const [transactions, transactionsMetaData] = await Transaction.findAll({
             where: {
                 peopleId: peopleId
-            }
+            }, limit: pageSize, offset: offset
         })
         res.status(200).json({ status: "Ok", transactions: transactions })
     } catch (error) {
